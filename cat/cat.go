@@ -8,16 +8,10 @@ import "io"
 func main() {
 	flag.Parse()
 
-	filereaders, errs := gocatargs.NewReaders()
-
-	if len(errs) > 0 {
-		panic(errs)
+	if reader, err := gocatargs.NewOneReader(); err != nil {
+		panic(err)
+	} else {
+		defer reader.Close()
+		io.Copy(os.Stdout, reader)
 	}
-	readers := []io.Reader{}
-	for _, elt := range filereaders {
-		readers = append(readers, elt)
-		defer elt.Close()
-	}
-	io.Copy(os.Stdout, io.MultiReader(readers...))
-
 }
