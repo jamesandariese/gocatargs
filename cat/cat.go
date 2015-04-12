@@ -1,6 +1,6 @@
 package main
 
-import "github.com/jamesandariese/catargs"
+import "github.com/jamesandariese/gocatargs"
 import "flag"
 import "os"
 import "io"
@@ -8,7 +8,7 @@ import "io"
 func main() {
 	flag.Parse()
 
-	filereaders, errs := catargs.Readers()
+	filereaders, errs := gocatargs.Readers()
 
 	if len(errs) > 0 {
 		panic(errs)

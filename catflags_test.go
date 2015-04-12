@@ -1,4 +1,4 @@
-package catargs
+package gocatargs
 
 import (
 	"testing"
