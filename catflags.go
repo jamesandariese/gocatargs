@@ -33,7 +33,7 @@ func (r OneReader) Read(p []byte) (n int, err error) {
 	return r.r.Read(p)
 }
 
-func (r OneReader) Close(p []byte) (err error) {
+func (r OneReader) Close() (err error) {
 	for _, reader := range(r.readers) {
 		terr := reader.Close()
 		if terr != nil {
@@ -43,11 +43,11 @@ func (r OneReader) Close(p []byte) (err error) {
 	return
 }
 
-func Readers() (readers []*Reader, errs []error) {
-	return testable_Readers(os.Stdin, flag.Args())
+func NewReaders() (readers []*Reader, errs []error) {
+	return testable_NewReaders(os.Stdin, flag.Args())
 }
 
-func testable_Readers(stdin io.ReadCloser, args []string) (readers []*Reader, errs []error) {
+func testable_NewReaders(stdin io.ReadCloser, args []string) (readers []*Reader, errs []error) {
 	if len(args) > 0 {
 		for _, arg := range args {
 			if arg == "-" {
@@ -62,6 +62,25 @@ func testable_Readers(stdin io.ReadCloser, args []string) (readers []*Reader, er
 		}
 	} else {
 		return []*Reader{&Reader{stdin}}, nil
+	}
+	return
+}
+
+func NewOneReader() (OneReader, error) {
+	return testable_NewOneReader(os.Stdin, flag.Args())
+}
+
+func testable_NewOneReader(stdin io.ReadCloser, args []string) (r OneReader, err error) {
+	readers, errs := testable_NewReaders(stdin, args)
+	if len(errs) > 0 {
+		err = errs[0]
+	} else {
+		justreaders := []io.Reader{}
+		for _, elt := range readers {                       
+			r.readers = append(r.readers, elt)
+			justreaders = append(justreaders, elt)
+		}                                                       
+		r.r = io.MultiReader(justreaders...)
 	}
 	return
 }

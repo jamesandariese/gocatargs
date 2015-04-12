@@ -8,7 +8,7 @@ import "io"
 func main() {
 	flag.Parse()
 
-	filereaders, errs := gocatargs.Readers()
+	filereaders, errs := gocatargs.NewReaders()
 
 	if len(errs) > 0 {
 		panic(errs)
