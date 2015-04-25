@@ -1,4 +1,4 @@
-catargs
+gocatargs
 ===
 
 Arguments sort of like cat with - representing stdin.
