@@ -1,6 +1,8 @@
 gocatargs
 ===
 
+[![Build Status](https://travis-ci.org/jamesandariese/gocatargs.svg)](https://travis-ci.org/jamesandariese/gocatargs)
+
 Arguments sort of like cat with - representing stdin.
 
 This uses the remaining arguments from a flag.Parse and returns a list of readers and a list of errs.
