@@ -1,8 +1,9 @@
 catargs
+===
 
 Arguments sort of like cat with - representing stdin.
 
-This returns a list of readers and a list of errs.
+This uses the remaining arguments from a flag.Parse and returns a list of readers and a list of errs.
 
 Most will only care about the contents of all of the
 files together.  This is easily accomplished with
